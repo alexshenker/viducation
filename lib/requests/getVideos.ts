@@ -1,5 +1,5 @@
 import { API_ROUTES } from "@/utils/apiRoutes";
-import { UserId, Video } from "@/utils/types";
+import { Video } from "@/utils/types";
 import z from "zod";
 
 const Res = z.object({
@@ -8,8 +8,8 @@ const Res = z.object({
 
 type Res = z.infer<typeof Res>;
 
-const getVideos = async (userId: UserId): Promise<Res> => {
-    const res = await fetch(API_ROUTES.get_videos(userId), {
+const getVideos = async (): Promise<Res> => {
+    const res = await fetch(API_ROUTES.get_videos, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -17,7 +17,7 @@ const getVideos = async (userId: UserId): Promise<Res> => {
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to fetch videos for user with id ${userId}`);
+        throw new Error("Failed to fetch videos");
     }
 
     const data = await res.json();

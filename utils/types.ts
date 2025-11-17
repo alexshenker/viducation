@@ -31,3 +31,29 @@ export const Comment = z.object({
     created_at: DateSchema,
     content: z.string(),
 });
+
+type LoadingState = {
+    isLoading: true;
+    data: undefined;
+    error: undefined;
+    hasError: false;
+};
+
+type ErrorState = {
+    isLoading: false;
+    data: undefined;
+    error: Error;
+    hasError: true;
+};
+
+type LoadedState<T> = {
+    isLoading: false;
+    data: T;
+    error: undefined;
+    hasError: false;
+};
+
+/**
+ * Strong typing for SWR hook response states
+ */
+export type SWRHookResponse<T> = LoadingState | ErrorState | LoadedState<T>;

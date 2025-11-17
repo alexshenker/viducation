@@ -1,33 +1,11 @@
+import { SWRHookResponse } from "@/utils/types";
 import useSWR from "swr";
 import getVideos, { VideosRes } from "../requests/getVideos";
-
-type LoadingState = {
-    isLoading: true;
-    data: undefined;
-    error: undefined;
-};
-
-type ErrorState = {
-    isLoading: false;
-    data: undefined;
-    error: Error;
-};
-
-type LoadedState = {
-    isLoading: false;
-    data: VideosRes;
-    error: undefined;
-};
-
-/**
- * Strong typing for SWR hook response states
- */
-type HookResponse = LoadingState | ErrorState | LoadedState;
 
 // Key for SWR caching and mutation to be shared when uploading or editing videos
 export const videos_key = "videos";
 
-const useVideos = (): HookResponse => {
+const useVideos = (): SWRHookResponse<VideosRes> => {
     const videos = useSWR(videos_key, getVideos);
 
     if (videos.isLoading) {
@@ -35,6 +13,7 @@ const useVideos = (): HookResponse => {
             isLoading: true,
             data: undefined,
             error: undefined,
+            hasError: false,
         };
     }
 
@@ -43,6 +22,7 @@ const useVideos = (): HookResponse => {
             isLoading: false,
             data: undefined,
             error: videos.error,
+            hasError: true,
         };
     }
 
@@ -52,6 +32,7 @@ const useVideos = (): HookResponse => {
             isLoading: false,
             data: undefined,
             error: new Error("Data is undefined"),
+            hasError: true,
         };
     }
 
@@ -59,6 +40,7 @@ const useVideos = (): HookResponse => {
         isLoading: false,
         data: videos.data,
         error: undefined,
+        hasError: false,
     };
 };
 

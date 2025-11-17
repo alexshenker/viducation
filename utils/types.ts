@@ -15,7 +15,7 @@ export const DateSchema = z.iso.datetime().transform((str) => new Date(str));
 
 export const Video = z.object({
     id: VideoId,
-    video_url: z.url(),
+    video_url: z.string(), // Cannot user z.url() because DB has some invalid URLs from testing. There's also no Delete api available in the Test DB. This is a workaround for this project specifically.
     title: z.string(),
     description: z.string(),
     num_comments: z.number().int().nonnegative(),

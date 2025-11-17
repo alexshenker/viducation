@@ -2,13 +2,13 @@ import { API_ROUTES } from "@/utils/apiRoutes";
 import { Video } from "@/utils/types";
 import z from "zod";
 
-const Res = z.object({
+const VideosRes = z.object({
     videos: z.array(Video),
 });
 
-type Res = z.infer<typeof Res>;
+export type VideosRes = z.infer<typeof VideosRes>;
 
-const getVideos = async (): Promise<Res> => {
+const getVideos = async (): Promise<VideosRes> => {
     const res = await fetch(API_ROUTES.get_videos, {
         method: "GET",
         headers: {
@@ -22,7 +22,7 @@ const getVideos = async (): Promise<Res> => {
 
     const data = await res.json();
 
-    const parsed = Res.safeParse(data);
+    const parsed = VideosRes.safeParse(data);
 
     if (parsed.success) {
         return parsed.data;

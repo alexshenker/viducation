@@ -22,6 +22,8 @@ export const Video = z.object({
     created_at: DateSchema,
 });
 
+export type Video = z.infer<typeof Video>;
+
 export const Comment = z.object({
     id: z.string(), // Not branded until a need arises
     video_id: VideoId,

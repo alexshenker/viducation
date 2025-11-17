@@ -1,13 +1,13 @@
 import { API_ROUTES } from "@/utils/apiRoutes";
 import { VideoId } from "@/utils/types";
 
-type PostVideoBody = {
+export type EditVideoBody = {
     video_id: VideoId;
     title: string;
     description: string;
 };
 
-const putVideo = async (body: PostVideoBody): Promise<void> => {
+const putVideo = async (body: EditVideoBody): Promise<void> => {
     const res = await fetch(API_ROUTES.put_video, {
         method: "PUT",
         headers: {

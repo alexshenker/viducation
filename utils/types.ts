@@ -34,6 +34,7 @@ export const Comment = z.object({
 
 type LoadingState = {
     isLoading: true;
+    isValidating: true;
     data: undefined;
     error: undefined;
     hasError: false;
@@ -44,6 +45,7 @@ type ErrorState = {
     data: undefined;
     error: Error;
     hasError: true;
+    isValidating: boolean;
 };
 
 type LoadedState<T> = {
@@ -51,6 +53,7 @@ type LoadedState<T> = {
     data: T;
     error: undefined;
     hasError: false;
+    isValidating: boolean;
 };
 
 /**

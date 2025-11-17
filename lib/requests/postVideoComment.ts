@@ -1,7 +1,7 @@
 import { API_ROUTES } from "@/utils/apiRoutes";
 import { UserId, VideoId } from "@/utils/types";
 
-type PostVideoCommentBody = {
+export type PostVideoCommentBody = {
     video_id: VideoId;
     content: string;
     user_id: UserId;

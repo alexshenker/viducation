@@ -14,6 +14,7 @@ const useVideos = (): SWRHookResponse<VideosRes> => {
             data: undefined,
             error: undefined,
             hasError: false,
+            isValidating: true,
         };
     }
 
@@ -23,6 +24,7 @@ const useVideos = (): SWRHookResponse<VideosRes> => {
             data: undefined,
             error: videos.error,
             hasError: true,
+            isValidating: videos.isValidating,
         };
     }
 
@@ -33,6 +35,7 @@ const useVideos = (): SWRHookResponse<VideosRes> => {
             data: undefined,
             error: new Error("Data is undefined"),
             hasError: true,
+            isValidating: videos.isValidating,
         };
     }
 
@@ -41,6 +44,7 @@ const useVideos = (): SWRHookResponse<VideosRes> => {
         data: videos.data,
         error: undefined,
         hasError: false,
+        isValidating: videos.isValidating,
     };
 };
 

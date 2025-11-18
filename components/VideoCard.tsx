@@ -10,7 +10,7 @@ interface Props {
 const VideoCard = (props: Props): React.JSX.Element => {
     return (
         <Link href={APP_ROUTES.video_page(props.video.id)}>
-            <div className="overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg dark:shadow-gray-700/25 bg-white dark:bg-gray-900">
+            <div className="overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg dark:shadow-gray-700/25 bg-white dark:bg-gray-900 h-full">
                 <div>
                     <video
                         className="h-40 w-full rounded-xl object-cover shadow-xl transition group-hover:grayscale-50 dark:shadow-gray-700/25"

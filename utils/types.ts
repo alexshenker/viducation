@@ -7,11 +7,10 @@ export const UserId = z.custom<UserId>((val) => typeof val === "string");
 export type VideoId = string & { __brand: "VideoId" };
 export const VideoId = z.custom<VideoId>((val) => typeof val === "string");
 
-/** 
- * Dates appear to be coming back as ISO strings, so I validate this and transform them into
-date objects for easier use later on. 
-*/
-export const DateSchema = z.iso.datetime().transform((str) => new Date(str));
+/**
+ * Coerces any valid date input (string, number, Date) into a Date object
+ */
+export const DateSchema = z.coerce.date();
 
 export const Video = z.object({
     id: VideoId,

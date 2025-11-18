@@ -28,6 +28,8 @@ const getVideos = async (): Promise<VideosRes> => {
         return parsed.data;
     }
 
+    console.error(`[${getVideos.name}]: Invalid response format`, parsed.error);
+
     throw new Error(
         `[${getVideos.name}]: Invalid response format: ${parsed.error.message}`
     );

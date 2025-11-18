@@ -2,6 +2,15 @@ import { API_ROUTES } from "@/utils/apiRoutes";
 import { Video } from "@/utils/types";
 import z from "zod";
 
+/**
+ * I've uploaded some videos with invalid urls. since there's no API delete function, I need to filter them out as they can't be shown the way I need them to be.
+ */
+const filterInvalidVideos = (videos: Video[]): Video[] => {
+    return videos.filter((video) => {
+        return z.url().safeParse(video.video_url).success;
+    });
+};
+
 const VideosRes = z.object({
     videos: z.array(Video),
 });
@@ -25,7 +34,9 @@ const getVideos = async (): Promise<VideosRes> => {
     const parsed = VideosRes.safeParse(data);
 
     if (parsed.success) {
-        return parsed.data;
+        return {
+            videos: filterInvalidVideos(parsed.data.videos),
+        };
     }
 
     console.error(`[${getVideos.name}]: Invalid response format`, parsed.error);

@@ -11,14 +11,32 @@ const CreateVideo = (): React.JSX.Element => {
 
     const { createVideo } = useCreateVideo();
 
+    const enableSubmit =
+        videoUrl.length > 0 && title.length > 0 && description.length > 0;
+
     const callCreateVideo = async () => {
+        if (!enableSubmit) {
+            // @TODO: Show some error to the user
+            return;
+        }
+
+        // @TODO: Additional validation logic... valid url, valid title, etc.
+        // Loading...
         try {
             await createVideo({
                 video_url: videoUrl,
                 title,
                 description,
             });
-        } catch {}
+        } catch {
+            //@TODO: Show some error to the user
+        } finally {
+            //@TODO:  loading state false
+
+            setVideoUrl("");
+            setTitle("");
+            setDescription("");
+        }
     };
 
     return (
@@ -41,7 +59,9 @@ const CreateVideo = (): React.JSX.Element => {
                 />
             </form>
 
-            <Button>Submit</Button>
+            <Button onClick={callCreateVideo} disabled={!enableSubmit}>
+                Submit
+            </Button>
         </div>
     );
 };

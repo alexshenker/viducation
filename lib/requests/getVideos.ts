@@ -2,12 +2,16 @@ import { API_ROUTES } from "@/utils/apiRoutes";
 import { Video } from "@/utils/types";
 import z from "zod";
 
+export const isValidUrl = (url: string): boolean => {
+    return z.url().safeParse(url).success;
+};
+
 /**
  * I've uploaded some videos with invalid urls. since there's no API delete function, I need to filter them out as they can't be shown the way I need them to be.
  */
 const filterInvalidVideos = (videos: Video[]): Video[] => {
     return videos.filter((video) => {
-        return z.url().safeParse(video.video_url).success;
+        return isValidUrl(video.video_url);
     });
 };
 

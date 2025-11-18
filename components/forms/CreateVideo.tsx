@@ -1,4 +1,5 @@
 import useCreateVideo from "@/lib/hooks/useCreateVideo";
+import { isValidUrl } from "@/lib/requests/getVideos";
 import { useState } from "react";
 import Button from "../Button";
 import Input from "../Input";
@@ -26,6 +27,11 @@ const CreateVideo = (): React.JSX.Element => {
             return;
         }
 
+        if (!isValidUrl(videoUrl)) {
+            // @TODO: Show some error (invalid url) to the user
+            return;
+        }
+
         // @TODO: Additional validation logic... valid url, valid title, etc.
         // Loading...
         try {
@@ -44,7 +50,7 @@ const CreateVideo = (): React.JSX.Element => {
     };
 
     return (
-        <div className="mx-auto max-w-md space-y-3 rounded-lg border border-gray-300 bg-gray-100 p-6 dark:border-gray-600 dark:bg-gray-800">
+        <div className="w-full space-y-2 rounded-lg border border-gray-300 bg-gray-100 p-6 dark:border-gray-600 dark:bg-gray-800">
             <form action="#">
                 <Input
                     value={videoUrl}

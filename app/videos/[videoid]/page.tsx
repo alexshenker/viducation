@@ -141,7 +141,7 @@ const VideoPage = (): React.JSX.Element => {
         <div className="p-4 sm:p-5">
             <BackToVideos />
             <div className="flex sm:flex-row flex-col mt-1">
-                <div className="max-w-4xl w-full">
+                <div className="w-full">
                     <video controls src={video.data.video.video_url} />
                     {editMode ? (
                         <div>

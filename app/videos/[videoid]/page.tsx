@@ -3,14 +3,18 @@ import Button from "@/components/Button";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import VideoCard from "@/components/VideoCard";
+import useComments from "@/lib/hooks/useComments";
 import useEditVideo from "@/lib/hooks/useEditVideo";
+import usePostComment from "@/lib/hooks/usePostComment";
 import useVideo from "@/lib/hooks/useVideo";
 import useVideos from "@/lib/hooks/useVideos";
-import { VideoId } from "@/utils/types";
+import { UserId, VideoId } from "@/utils/types";
 import { useParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 const VideoPage = (): React.JSX.Element => {
+    const random_user_id = useId();
+
     const param = useParams<{ videoid: VideoId }>();
 
     //@TODO: Handle missing videoid param
@@ -20,11 +24,39 @@ const VideoPage = (): React.JSX.Element => {
 
     const [description, setDescription] = useState<string>("");
 
+    const [newComment, setNewComment] = useState<string>("");
+
+    const comments = useComments(param.videoid);
+
     const initialDataSet = useRef<boolean>(false);
 
     const { editVideo } = useEditVideo();
+    const { createComment } = usePostComment();
 
     const [mutating, setMutating] = useState<boolean>(false);
+
+    const callAddComment = async () => {
+        if (newComment.trim() === "") {
+            //Comment cannot be empty
+            return;
+        }
+
+        setMutating(true);
+
+        try {
+            await createComment({
+                user_id: ("random_user_" + random_user_id) as UserId,
+                video_id: param.videoid,
+                content: newComment.trim(),
+            });
+
+            setNewComment("");
+        } catch (error) {
+            // Handle error
+        } finally {
+            setMutating(false);
+        }
+    };
 
     const callEditVideo = async () => {
         if (video.data === undefined) {
@@ -115,6 +147,7 @@ const VideoPage = (): React.JSX.Element => {
                         <Textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
+                            rows={1}
                         />
                         <div className="flex gap-3">
                             <Button
@@ -153,6 +186,54 @@ const VideoPage = (): React.JSX.Element => {
                         </div>
                     </div>
                 )}
+
+                {/* Comments Section */}
+                <div className="mt-6">
+                    <div>
+                        <Textarea
+                            placeholder="Add a comment..."
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                        />
+                        <div className="flex justify-end">
+                            <Button
+                                onClick={callAddComment}
+                                disabled={mutating || newComment.trim() === ""}
+                            >
+                                Submit
+                            </Button>
+                        </div>
+                    </div>
+
+                    <div className="my-2">
+                        {comments.isLoading ? (
+                            <p>Loading comments...</p>
+                        ) : comments.hasError ? (
+                            <p>Error loading comments</p>
+                        ) : comments.data.comments.length === 0 ? (
+                            <p>No comments yet.</p>
+                        ) : (
+                            comments.data.comments.map((comment) => (
+                                <div
+                                    key={comment.id}
+                                    className="mb-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg"
+                                >
+                                    <p className="text-xs text-gray-900 dark:text-white">
+                                        {comment.user_id}{" "}
+                                        <span className="text-[10px]">
+                                            {new Date(
+                                                comment.created_at
+                                            ).toLocaleString()}
+                                        </span>
+                                    </p>
+                                    <p className="text-gray-900 dark:text-white">
+                                        {comment.content}
+                                    </p>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
             </div>
             <div className="w-full sm:w-60 p-0 sm:p-2 flex flex-col gap-3">
                 {videos.isLoading ? (

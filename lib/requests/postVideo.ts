@@ -8,7 +8,7 @@ export type PostVideoBody = {
 
 const postVideo = async (body: PostVideoBody): Promise<void> => {
     const res = await fetch(API_ROUTES.post_video, {
-        method: "PUT",
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
         },

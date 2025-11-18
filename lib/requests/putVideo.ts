@@ -17,7 +17,7 @@ const putVideo = async (body: EditVideoBody): Promise<void> => {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to post video");
+        throw new Error(`Failed to update video with id ${body.video_id}`);
     }
 
     return;

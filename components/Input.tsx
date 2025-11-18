@@ -15,7 +15,7 @@ const Input = (props: Props): React.JSX.Element => {
         <div>
             {props.label && <Label id={id}>{props.label}</Label>}
             <input
-                className="p-2 mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                className="p-2 mt-0.5 w-full rounded border border-gray-300 shadow-sm sm:text-sm dark:border-gray-600 dark:bg-gray-900 dark:text-white"
                 id={id}
                 placeholder={props.placeholder}
                 value={props.value}

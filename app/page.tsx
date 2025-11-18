@@ -1,4 +1,6 @@
+"use client";
 import Button from "@/components/Button";
+import CreateVideo from "@/components/forms/CreateVideo";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import VideoCard from "@/components/VideoCard";
@@ -26,6 +28,7 @@ export default function Home() {
                             created_at: new Date(),
                         }}
                     />
+                    <CreateVideo />
                 </div>
             </main>
         </div>

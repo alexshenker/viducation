@@ -31,6 +31,7 @@ const VideoCard = (props: Props): React.JSX.Element => {
                     <time
                         dateTime={props.video.created_at.toISOString()}
                         className="block text-xs text-gray-500 dark:text-gray-400"
+                        suppressHydrationWarning // Prevent hydration mismatch due to locale differences
                     >
                         {props.video.created_at.toLocaleDateString("en-US", {
                             // ex: Jan 1, 2024

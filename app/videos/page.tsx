@@ -22,11 +22,11 @@ const Videos = (): React.JSX.Element => {
     }
 
     return (
-        <div>
+        <div className="p-4">
             <Button onClick={() => router.push(APP_ROUTES.create_video)}>
                 Add Video
             </Button>
-            <div>
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {videos.data.videos.map((video) => {
                     return <VideoCard key={video.id} video={video} />;
                 })}

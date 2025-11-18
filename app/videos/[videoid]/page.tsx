@@ -1,4 +1,5 @@
 "use client";
+import BackToVideos from "@/components/BackToVideos";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
@@ -9,13 +10,15 @@ import usePostComment from "@/lib/hooks/usePostComment";
 import useVideo from "@/lib/hooks/useVideo";
 import useVideos from "@/lib/hooks/useVideos";
 import { UserId, VideoId } from "@/utils/types";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 
 const VideoPage = (): React.JSX.Element => {
     const random_user_id = useId();
 
     const param = useParams<{ videoid: VideoId }>();
+
+    const router = useRouter();
 
     //@TODO: Handle missing videoid param
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -135,121 +138,129 @@ const VideoPage = (): React.JSX.Element => {
     }
 
     return (
-        <div className="p-4 sm:p-5 flex sm:flex-row flex-col">
-            <div className="max-w-4xl w-full">
-                <video controls src={video.data.video.video_url} />
-                {editMode ? (
-                    <div>
-                        <Input
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                        <Textarea
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            rows={1}
-                        />
-                        <div className="flex gap-3">
-                            <Button
-                                onClick={() => {
-                                    setEditMode(false);
-                                    //Reset fields to original values
-                                    setTitle(video.data.video.title);
-                                    setDescription(
-                                        video.data.video.description
-                                    );
-                                }}
-                            >
-                                Cancel
-                            </Button>
-
-                            <Button onClick={callEditVideo} disabled={mutating}>
-                                Submit
-                            </Button>
-                        </div>
-                    </div>
-                ) : (
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <h3 className="my-1.5 text-xl font-bold text-gray-900 dark:text-white">
-                                {video.data.video.title}
-                            </h3>
-
-                            <Button onClick={() => setEditMode(true)}>
-                                Edit
-                            </Button>
-                        </div>
-                        <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                            <p className="mt-1 line-clamp-3 text-md text-gray-500 dark:text-gray-300">
-                                {video.data.video.description}
-                            </p>
-                        </div>
-                    </div>
-                )}
-
-                {/* Comments Section */}
-                <div className="mt-6">
-                    <div>
-                        <Textarea
-                            placeholder="Add a comment..."
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                        />
-                        <div className="flex justify-end">
-                            <Button
-                                onClick={callAddComment}
-                                disabled={mutating || newComment.trim() === ""}
-                            >
-                                Submit
-                            </Button>
-                        </div>
-                    </div>
-
-                    <div className="my-2">
-                        {comments.isLoading ? (
-                            <p>Loading comments...</p>
-                        ) : comments.hasError ? (
-                            <p>Error loading comments</p>
-                        ) : comments.data.comments.length === 0 ? (
-                            <p>No comments yet.</p>
-                        ) : (
-                            comments.data.comments.map((comment) => (
-                                <div
-                                    key={comment.id}
-                                    className="mb-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg"
+        <div className="p-4 sm:p-5">
+            <BackToVideos />
+            <div className="flex sm:flex-row flex-col mt-1">
+                <div className="max-w-4xl w-full">
+                    <video controls src={video.data.video.video_url} />
+                    {editMode ? (
+                        <div>
+                            <Input
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+                            <Textarea
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                rows={1}
+                            />
+                            <div className="flex gap-3">
+                                <Button
+                                    onClick={() => {
+                                        setEditMode(false);
+                                        //Reset fields to original values
+                                        setTitle(video.data.video.title);
+                                        setDescription(
+                                            video.data.video.description
+                                        );
+                                    }}
                                 >
-                                    <p className="text-xs text-gray-900 dark:text-white">
-                                        {comment.user_id}{" "}
-                                        <span className="text-[10px]">
-                                            {new Date(
-                                                comment.created_at
-                                            ).toLocaleString()}
-                                        </span>
-                                    </p>
-                                    <p className="text-gray-900 dark:text-white">
-                                        {comment.content}
-                                    </p>
-                                </div>
-                            ))
-                        )}
+                                    Cancel
+                                </Button>
+
+                                <Button
+                                    onClick={callEditVideo}
+                                    disabled={mutating}
+                                >
+                                    Submit
+                                </Button>
+                            </div>
+                        </div>
+                    ) : (
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <h3 className="my-1.5 text-xl font-bold text-gray-900 dark:text-white">
+                                    {video.data.video.title}
+                                </h3>
+
+                                <Button onClick={() => setEditMode(true)}>
+                                    Edit
+                                </Button>
+                            </div>
+                            <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                                <p className="mt-1 line-clamp-3 text-md text-gray-500 dark:text-gray-300">
+                                    {video.data.video.description}
+                                </p>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Comments Section */}
+                    <div className="mt-6">
+                        <div>
+                            <Textarea
+                                placeholder="Add a comment..."
+                                value={newComment}
+                                onChange={(e) => setNewComment(e.target.value)}
+                            />
+                            <div className="flex justify-end">
+                                <Button
+                                    onClick={callAddComment}
+                                    disabled={
+                                        mutating || newComment.trim() === ""
+                                    }
+                                >
+                                    Submit
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div className="my-2">
+                            {comments.isLoading ? (
+                                <p>Loading comments...</p>
+                            ) : comments.hasError ? (
+                                <p>Error loading comments</p>
+                            ) : comments.data.comments.length === 0 ? (
+                                <p>No comments yet.</p>
+                            ) : (
+                                comments.data.comments.map((comment) => (
+                                    <div
+                                        key={comment.id}
+                                        className="mb-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg"
+                                    >
+                                        <p className="text-xs text-gray-900 dark:text-white">
+                                            {comment.user_id}{" "}
+                                            <span className="text-[10px]">
+                                                {new Date(
+                                                    comment.created_at
+                                                ).toLocaleString()}
+                                            </span>
+                                        </p>
+                                        <p className="text-gray-900 dark:text-white">
+                                            {comment.content}
+                                        </p>
+                                    </div>
+                                ))
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="w-full sm:w-60 p-0 sm:p-2 flex flex-col gap-3">
-                {videos.isLoading ? (
-                    <div>Loading more videos...</div>
-                ) : videos.hasError ? (
-                    <div>Error loading more videos</div>
-                ) : (
-                    videos.data.videos
-                        //Don't show the current video in the related videos list
-                        .filter((vid) => vid.id !== video.data.video.id)
-                        //Show only some other videos, not all
-                        .slice(0, 3)
-                        .map((vid) => {
-                            return <VideoCard key={vid.id} video={vid} />;
-                        })
-                )}
+                <div className="w-full sm:w-60 p-0 sm:p-2 flex flex-col gap-3">
+                    {videos.isLoading ? (
+                        <div>Loading more videos...</div>
+                    ) : videos.hasError ? (
+                        <div>Error loading more videos</div>
+                    ) : (
+                        videos.data.videos
+                            //Don't show the current video in the related videos list
+                            .filter((vid) => vid.id !== video.data.video.id)
+                            //Show only some other videos, not all
+                            .slice(0, 3)
+                            .map((vid) => {
+                                return <VideoCard key={vid.id} video={vid} />;
+                            })
+                    )}
+                </div>
             </div>
         </div>
     );

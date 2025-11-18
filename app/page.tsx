@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import VideoCard from "@/components/VideoCard";
@@ -13,6 +14,7 @@ export default function Home() {
                         placeholder="Type here..."
                         label="Sample Textarea"
                     />
+                    <Button>Test</Button>
                     <VideoCard
                         video={{
                             id: "dQw4w9WgXcQ" as VideoId,

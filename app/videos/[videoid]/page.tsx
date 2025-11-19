@@ -148,6 +148,7 @@ const VideoPage = (): React.JSX.Element => {
 
     return (
         <div className="p-4 sm:p-5">
+            {mutating && <Loading />}
             <BackToVideos />
             <div className="flex sm:flex-row flex-col mt-1">
                 <div className="w-full">

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Button from "../Button";
 import Input from "../Input";
 import Textarea from "../Textarea";
+import Loading from "../Loading";
 
 const CreateVideo = (): React.JSX.Element => {
     const [videoUrl, setVideoUrl] = useState<string>("");
@@ -11,6 +12,8 @@ const CreateVideo = (): React.JSX.Element => {
     const [description, setDescription] = useState<string>("");
 
     const { createVideo } = useCreateVideo();
+
+    const [mutating, setMutating] = useState<boolean>(false);
 
     const enableSubmit =
         videoUrl.length > 0 && title.length > 0 && description.length > 0;
@@ -33,8 +36,8 @@ const CreateVideo = (): React.JSX.Element => {
         }
 
         // @TODO: Additional validation logic... valid url, valid title, etc.
-        // Loading...
         try {
+            setMutating(true);
             await createVideo({
                 video_url: videoUrl,
                 title,
@@ -45,12 +48,13 @@ const CreateVideo = (): React.JSX.Element => {
         } catch {
             //@TODO: Show some error to the user
         } finally {
-            //@TODO:  loading state false
+            setMutating(false);
         }
     };
 
     return (
         <div className="w-full space-y-2 rounded-lg border border-gray-300 bg-gray-100 p-6 dark:border-gray-600 dark:bg-gray-800">
+            {mutating && <Loading />}
             <form action="#">
                 <Input
                     value={videoUrl}

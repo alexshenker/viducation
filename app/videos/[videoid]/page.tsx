@@ -122,8 +122,6 @@ const VideoPage = (): React.JSX.Element => {
 
         initialDataSet.current = true;
     }, [
-        description,
-        title,
         video.data?.video.description,
         video.data?.video.title,
         video.hasError,

@@ -1,6 +1,7 @@
 "use client";
 import BackToVideos from "@/components/BackToVideos";
 import Button from "@/components/Button";
+import ErrorBox from "@/components/ErrorBox";
 import Input from "@/components/Input";
 import Loading from "@/components/Loading";
 import Textarea from "@/components/Textarea";
@@ -30,6 +31,8 @@ const VideoPage = (): React.JSX.Element => {
 
     const [newComment, setNewComment] = useState<string>("");
 
+    const [error, setError] = useState<string>("");
+
     const comments = useComments(param.videoid);
 
     const initialDataSet = useRef<boolean>(false);
@@ -55,8 +58,9 @@ const VideoPage = (): React.JSX.Element => {
             });
 
             setNewComment("");
+            setError("");
         } catch (error) {
-            // Handle error
+            setError("Error adding comment. Please try again.");
         } finally {
             setMutating(false);
         }
@@ -90,8 +94,9 @@ const VideoPage = (): React.JSX.Element => {
             });
 
             setEditMode(false);
+            setError("");
         } catch (error) {
-            // Handle error
+            setError("Error editing video. Please try again.");
         } finally {
             setMutating(false);
         }
@@ -146,6 +151,9 @@ const VideoPage = (): React.JSX.Element => {
     return (
         <div className="p-4 sm:p-5">
             {mutating && <Loading />}
+
+            {error.trim() !== "" && <ErrorBox>{error}</ErrorBox>}
+
             <BackToVideos />
             <div className="flex sm:flex-row flex-col mt-1">
                 <div className="w-full">

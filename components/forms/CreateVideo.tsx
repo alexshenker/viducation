@@ -2,9 +2,10 @@ import useCreateVideo from "@/lib/hooks/useCreateVideo";
 import { isValidUrl } from "@/lib/requests/getVideos";
 import { useState } from "react";
 import Button from "../Button";
+import ErrorBox from "../ErrorBox";
 import Input from "../Input";
-import Textarea from "../Textarea";
 import Loading from "../Loading";
+import Textarea from "../Textarea";
 
 const CreateVideo = (): React.JSX.Element => {
     const [videoUrl, setVideoUrl] = useState<string>("");
@@ -14,6 +15,8 @@ const CreateVideo = (): React.JSX.Element => {
     const { createVideo } = useCreateVideo();
 
     const [mutating, setMutating] = useState<boolean>(false);
+
+    const [error, setError] = useState<string>("");
 
     const enableSubmit =
         videoUrl.length > 0 && title.length > 0 && description.length > 0;
@@ -26,12 +29,12 @@ const CreateVideo = (): React.JSX.Element => {
 
     const callCreateVideo = async () => {
         if (!enableSubmit) {
-            // @TODO: Show some error to the user
+            setError("All fields are required.");
             return;
         }
 
         if (!isValidUrl(videoUrl)) {
-            // @TODO: Show some error (invalid url) to the user
+            setError("Invalid video URL.");
             return;
         }
 
@@ -46,7 +49,7 @@ const CreateVideo = (): React.JSX.Element => {
 
             clearForm();
         } catch {
-            //@TODO: Show some error to the user
+            setError("Error creating video.");
         } finally {
             setMutating(false);
         }
@@ -55,6 +58,7 @@ const CreateVideo = (): React.JSX.Element => {
     return (
         <div className="w-full space-y-2 rounded-lg border border-gray-300 bg-gray-100 p-6 dark:border-gray-600 dark:bg-gray-800">
             {mutating && <Loading />}
+            {error.trim() !== "" && <ErrorBox>{error}</ErrorBox>}
             <form action="#">
                 <Input
                     value={videoUrl}

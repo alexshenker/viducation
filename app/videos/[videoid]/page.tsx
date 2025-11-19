@@ -227,11 +227,17 @@ const VideoPage = (): React.JSX.Element => {
 
                         <div className="my-2">
                             {comments.isLoading ? (
-                                <p>Loading comments...</p>
+                                <p className="text-gray-900 dark:text-white">
+                                    Loading comments...
+                                </p>
                             ) : comments.hasError ? (
-                                <p>Error loading comments</p>
+                                <p className="text-gray-900 dark:text-white">
+                                    Error loading comments
+                                </p>
                             ) : comments.data.comments.length === 0 ? (
-                                <p>No comments yet.</p>
+                                <p className="text-gray-900 dark:text-white">
+                                    No comments yet.
+                                </p>
                             ) : (
                                 comments.data.comments.map((comment) => (
                                     <div

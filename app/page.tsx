@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
     return (
-        <div className="min-h-screen bg-linear-to-br from-white via-gray-100 to-gray-300 dark:from-black dark:via-zinc-900 dark:to-zinc-700 transition-colors">
+        <div className="">
             <main className="flex min-h-screen items-center justify-center px-6">
                 <div className="max-w-4xl w-full space-y-16 text-center">
                     {/* Hero */}
@@ -18,7 +18,9 @@ export default function Home() {
                     {/* Features */}
                     <div className="grid md:grid-cols-3 gap-8 max-w-3xl mx-auto">
                         <div className="space-y-2">
-                            <div className="text-4xl mb-3">▶</div>
+                            <div className="text-4xl mb-3 text-gray-700 dark:text-gray-300">
+                                ▶
+                            </div>
                             <h3 className="font-semibold text-black dark:text-white">
                                 Expert Videos
                             </h3>
@@ -36,7 +38,9 @@ export default function Home() {
                             </p>
                         </div>
                         <div className="space-y-2">
-                            <div className="text-4xl mb-3">✓</div>
+                            <div className="text-4xl mb-3 text-gray-700 dark:text-gray-300">
+                                ✓
+                            </div>
                             <h3 className="font-semibold text-black dark:text-white">
                                 Track Progress
                             </h3>

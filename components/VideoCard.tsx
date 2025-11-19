@@ -24,6 +24,7 @@ const VideoCard = (props: Props): React.JSX.Element => {
                             e.currentTarget.pause();
                             e.currentTarget.currentTime = 0;
                         }}
+                        aria-label={`Preview: ${props.video.title}`}
                     />
                 </div>
 

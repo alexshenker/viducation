@@ -11,6 +11,7 @@ import useEditVideo from "@/lib/hooks/useEditVideo";
 import usePostComment from "@/lib/hooks/usePostComment";
 import useVideo from "@/lib/hooks/useVideo";
 import useVideos from "@/lib/hooks/useVideos";
+import { APP_ROUTES } from "@/utils/appRoutes";
 import { UserId, VideoId } from "@/utils/types";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
@@ -137,11 +138,14 @@ const VideoPage = (): React.JSX.Element => {
             <div className="text-center space-y-4">
                 <div className="text-6xl">⚠️</div>
                 <h2 className="text-2xl font-bold text-black dark:text-white">
-                    Error Loading Video
+                    Video Not Found
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400">
-                    Please try again later
+                    This video may have been removed or the link is incorrect
                 </p>
+                <Button onClick={() => router.push(APP_ROUTES.videos)}>
+                    Back to Videos
+                </Button>
             </div>
         );
     }
@@ -155,7 +159,11 @@ const VideoPage = (): React.JSX.Element => {
             <BackToVideos />
             <div className="flex sm:flex-row flex-col mt-1">
                 <div className="w-full">
-                    <video controls src={video.data.video.video_url} />
+                    <video
+                        controls
+                        src={video.data.video.video_url}
+                        aria-label={`Video: ${video.data.video.title}`}
+                    />
                     {editMode ? (
                         <div>
                             <Input

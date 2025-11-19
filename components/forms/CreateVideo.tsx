@@ -25,6 +25,7 @@ const CreateVideo = (): React.JSX.Element => {
         setVideoUrl("");
         setTitle("");
         setDescription("");
+        setError("");
     };
 
     const callCreateVideo = async () => {

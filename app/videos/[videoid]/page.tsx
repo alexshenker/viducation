@@ -44,7 +44,7 @@ const VideoPage = (): React.JSX.Element => {
 
     const callAddComment = async () => {
         if (newComment.trim() === "") {
-            //Comment cannot be empty
+            setError("Comment cannot be empty.");
             return;
         }
 
@@ -68,12 +68,12 @@ const VideoPage = (): React.JSX.Element => {
 
     const callEditVideo = async () => {
         if (video.data === undefined) {
-            //Video hasn't loaded yet
+            setError("Video data is not loaded yet.");
             return;
         }
 
         if (title.trim() === "") {
-            //Title cannot be empty
+            setError("Title cannot be empty.");
             return;
         }
 
@@ -81,7 +81,7 @@ const VideoPage = (): React.JSX.Element => {
             video.data.video.title === title.trim() &&
             video.data.video.description === description.trim()
         ) {
-            //No changes made
+            setError("No changes made to the video.");
             return;
         }
         setMutating(true);

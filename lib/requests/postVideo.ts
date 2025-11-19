@@ -1,3 +1,4 @@
+import { USER_ID } from "@/DEMO_ENV";
 import { API_ROUTES } from "@/utils/apiRoutes";
 
 export type PostVideoBody = {
@@ -14,7 +15,7 @@ const postVideo = async (body: PostVideoBody): Promise<void> => {
         },
         body: JSON.stringify({
             ...body,
-            user_id: "aleksey_shenker",
+            user_id: USER_ID,
         }),
     });
 

@@ -1,3 +1,4 @@
+import { USER_ID } from "@/DEMO_ENV";
 import { VideoId } from "./types";
 
 const VIDEOS_BASE_URL =
@@ -6,7 +7,7 @@ const VIDEOS_BASE_URL =
 // All API routes used in the application
 export const API_ROUTES = {
     post_video: VIDEOS_BASE_URL,
-    get_videos: `${VIDEOS_BASE_URL}?user_id=aleksey_shenker`,
+    get_videos: `${VIDEOS_BASE_URL}?user_id=${USER_ID}`,
     put_video: VIDEOS_BASE_URL,
     get_single_video: (videoId: VideoId) => {
         return `${VIDEOS_BASE_URL}/single?video_id=${videoId}`;

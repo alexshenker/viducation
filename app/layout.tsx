@@ -1,3 +1,4 @@
+import ThemeToggle from "@/components/ThemeToggle";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -29,6 +30,7 @@ export default function RootLayout({
                bg-linear-to-br from-white via-gray-100 to-gray-300 dark:from-black dark:via-zinc-900 dark:to-zinc-700 flex justify-center
                 `}
             >
+                <ThemeToggle />
                 {children}
             </body>
         </html>

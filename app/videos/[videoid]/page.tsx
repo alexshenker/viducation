@@ -73,16 +73,13 @@ const VideoPage = (): React.JSX.Element => {
             return;
         }
 
-        if (video.data.video.title === title) {
-            //No changes to title
+        if (
+            video.data.video.title === title.trim() &&
+            video.data.video.description === description.trim()
+        ) {
+            //No changes made
             return;
         }
-
-        if (video.data.video.description === description) {
-            //No changes to description
-            return;
-        }
-
         setMutating(true);
 
         try {

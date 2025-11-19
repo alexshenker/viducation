@@ -1,22 +1,83 @@
-import { APP_ROUTES } from "@/utils/appRoutes";
 import Link from "next/link";
 
 export default function Home() {
     return (
-        <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-            <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-                <div>
-                    <h2 className="text-2xl font-bold">Welcome to</h2>
-                    <h1 className="mt-2 text-6xl font-extrabold">Viducation</h1>
+        <div className="min-h-screen bg-linear-to-br from-white via-gray-100 to-gray-300 dark:from-black dark:via-zinc-900 dark:to-zinc-700 transition-colors">
+            <main className="flex min-h-screen items-center justify-center px-6">
+                <div className="max-w-4xl w-full space-y-16 text-center">
+                    {/* Hero */}
+                    <div className="space-y-6">
+                        <h1 className="text-7xl md:text-8xl font-black text-black dark:text-white tracking-tight">
+                            Viducation
+                        </h1>
+                        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                            Learn through video. Master your craft.
+                        </p>
+                    </div>
 
-                    <Link
-                        className="mt-20 inline-block text-gray-600 dark:text-gray-400 hover:underline"
-                        href={APP_ROUTES.videos}
-                    >
-                        <div className="border inline-flex items-center gap-2 rounded-sm border-gray-300 px-2 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800">
-                            Start <span className="text-2xl">→</span>
+                    {/* Features */}
+                    <div className="grid md:grid-cols-3 gap-8 max-w-3xl mx-auto">
+                        <div className="space-y-2">
+                            <div className="text-4xl mb-3">▶</div>
+                            <h3 className="font-semibold text-black dark:text-white">
+                                Expert Videos
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                                Professional instruction
+                            </p>
                         </div>
-                    </Link>
+                        <div className="space-y-2">
+                            <div className="text-4xl mb-3">📚</div>
+                            <h3 className="font-semibold text-black dark:text-white">
+                                Structured Learning
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                                Clear learning paths
+                            </p>
+                        </div>
+                        <div className="space-y-2">
+                            <div className="text-4xl mb-3">✓</div>
+                            <h3 className="font-semibold text-black dark:text-white">
+                                Track Progress
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                                Monitor your growth
+                            </p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <Link
+                            href="/videos"
+                            className="group inline-flex items-center gap-2 px-6 py-3 text-base font-semibold text-white bg-black dark:text-black dark:bg-white rounded-full transition-all hover:gap-3 hover:shadow-lg"
+                        >
+                            Start Learning
+                            <span className="text-xl transition-transform group-hover:translate-x-1">
+                                →
+                            </span>
+                        </Link>
+                    </div>
+
+                    <div className="flex justify-center gap-12 pt-8 text-sm text-gray-500 dark:text-gray-500">
+                        <div>
+                            <div className="font-bold text-2xl text-black dark:text-white">
+                                500+
+                            </div>
+                            <div>Videos</div>
+                        </div>
+                        <div>
+                            <div className="font-bold text-2xl text-black dark:text-white">
+                                50K+
+                            </div>
+                            <div>Learners</div>
+                        </div>
+                        <div>
+                            <div className="font-bold text-2xl text-black dark:text-white">
+                                98%
+                            </div>
+                            <div>Satisfied</div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>

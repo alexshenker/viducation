@@ -2,6 +2,7 @@
 import BackToVideos from "@/components/BackToVideos";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
+import Loading from "@/components/Loading";
 import Textarea from "@/components/Textarea";
 import VideoCard from "@/components/VideoCard";
 import useComments from "@/lib/hooks/useComments";
@@ -128,13 +129,21 @@ const VideoPage = (): React.JSX.Element => {
     ]);
 
     if (video.isLoading) {
-        //@TODO: Add a better loading state
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     if (video.hasError) {
-        //@TODO: Add a better error state
-        return <div>Error loading video</div>;
+        return (
+            <div className="text-center space-y-4">
+                <div className="text-6xl">⚠️</div>
+                <h2 className="text-2xl font-bold text-black dark:text-white">
+                    Error Loading Video
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                    Please try again later
+                </p>
+            </div>
+        );
     }
 
     return (

@@ -1,5 +1,6 @@
 # Viducation - Educational Video Platform
 
+(Simple app for code demo purposes)
 Educational video platform built with Next.js and TypeScript. Users can upload videos, watch them, and comment.
 
 ## Features

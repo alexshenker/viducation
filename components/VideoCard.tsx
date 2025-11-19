@@ -42,10 +42,10 @@ const VideoCard = (props: Props): React.JSX.Element => {
                         })}
                     </time>
 
-                    <h3 className="mt-0.5 text-lg text-gray-900 dark:text-white">
+                    <h3 className="mt-0.5 text-sm md:text-lg text-gray-900 dark:text-white">
                         {props.video.title}
                     </h3>
-                    <p className="mt-1 line-clamp-3 text-sm/relaxed text-gray-500 dark:text-gray-400">
+                    <p className="mt-1 line-clamp-3 text-xs md:text-sm text-gray-500 dark:text-gray-400">
                         {props.video.description}
                     </p>
                 </div>
